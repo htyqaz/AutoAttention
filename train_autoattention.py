@@ -68,14 +68,14 @@ if __name__ == "__main__":
 			print('Start training AutoAttention: ' + str(i))
 			log_path = ROOT_DATA + 'log/AutoAttention_log_' + str(i) + '.txt'
 			best_model_path = ROOT_DATA + 'best_model/AutoAttention.h5'
-			model= AutoAttention(fd, sess_feature, embedding_size=16, hist_len_max=sess_len_max)
+			model,a_out = AutoAttention(fd, sess_feature, embedding_size=16, hist_len_max=sess_len_max)
 		elif model_type == 'AutoAttention_Prun':
 			is_prun = True
 			sparse_rate = float(sys.argv[2])
 			print('Start training AutoAttention_Prun: ' + str(i))
 			log_path = ROOT_DATA + 'log/AutoAttention_Prun_log_' + str(i) + '.txt'
 			best_model_path = ROOT_DATA + 'best_model/AutoAttention_Prun.h5'
-			model = AutoAttention(fd, sess_feature, embedding_size=16, hist_len_max=sess_len_max)
+			model,a_out = AutoAttention(fd, sess_feature, embedding_size=16, hist_len_max=sess_len_max)
 		else:
 			print("Wrong argument model type!")
 			sys.exit(0)
@@ -91,6 +91,6 @@ if __name__ == "__main__":
 												  test_data=[test_input, test_label],
 												  best_model_path=best_model_path,
 												  is_prun=is_prun, target_sparse=sparse_rate)])
-
+                print(a_out)
 		K.clear_session()
 		del model
